@@ -12,6 +12,7 @@ class Array
 		int last_index;
 		int *ptr;
 	public:
+		Array(){ }
 		Array(int);
 		void createArray(int);
 		bool isEmpty();
@@ -24,6 +25,9 @@ class Array
 		int count();
 		~Array();
 		int find(int);
+		Array(Array&);
+		void showData();
+		Array& operator=(Array&);
 };
 
 int main()
@@ -33,18 +37,65 @@ int main()
 	obj.append(10);
 	obj.insert(0,20);
 	obj.insert(0,30);
+	Array a;
+	a=obj;
 	for(i=0;i<obj.count();i++)
 	{
 		cout<<obj.get(i)<<" ";
 	}
-	obj.deleteElement(1);
 	cout<<endl; 
-	for(i=0;i<obj.count();i++)
+
+	for(i=0;i<a.count();i++)
 	{
-		cout<<obj.get(i)<<" ";
+		cout<<a.get(i)<<" ";
 	}
 	cout<<endl;
 	return 0;
+}
+
+Array& Array::operator=(Array &arr)
+{
+	if(ptr!=NULL)
+		delete []ptr;
+
+	capacity=arr.capacity;
+	last_index=arr.last_index;
+
+	if(arr.ptr!=NULL)
+	{
+		ptr=new int[capacity];
+		for(int i=0;i<capacity;i++)
+		{
+			ptr[i]=arr.ptr[i];
+		}
+		return *this;
+	}
+	else
+	{
+		ptr=NULL;
+		return *this;
+	}
+}
+
+Array::Array(Array &arr)
+{
+	int i;
+
+	if(arr.ptr!=NULL)
+	{
+		capacity=arr.capacity;
+		last_index=arr.last_index;
+		cout<<capacity<< " "<<last_index<<endl;
+		ptr=new int[5];
+		for(i=0;i<capacity;i++)
+		{
+			ptr[i]=arr.ptr[i];
+		}
+	}
+	else
+	{
+		ptr=NULL;
+	}
 }
 
 int Array::find(int data)
