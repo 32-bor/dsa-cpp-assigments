@@ -22,8 +22,14 @@ class SLL
 		void deleteFirst();
 		void deleteLast();
 		void deleteNode(int);
+		void deleteNodeAlternate(int);
 		~SLL();
 };
+
+void SLL::deleteNodeAlternate(int key)
+{
+	
+}
 
 SLL::~SLL()
 {
@@ -33,11 +39,10 @@ SLL::~SLL()
 
 void SLL::deleteNode(int key)
 {
-	try
+
+	if(Start)
 	{
-		if(Start)
-			throw LIST_EMPTY;
-		else if(Start->next==NULL && Start->item==key)
+		if(Start->next==NULL && Start->item==key)
 		{
 			delete Start;
 			Start=NULL;
@@ -57,10 +62,6 @@ void SLL::deleteNode(int key)
 				t=t->next;
 			}
 		}
-	}
-	catch(int e)
-	{
-		cout<<"\nLinked list is empty"
 	}
 }
 
