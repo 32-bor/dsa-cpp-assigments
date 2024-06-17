@@ -35,21 +35,27 @@ void SLL::deleteNode(int key)
 {
 	try
 	{
-		if(Start==NULL)
+		if(Start)
 			throw LIST_EMPTY;
-		else if(Start->item==key)
+		else if(Start->next==NULL && Start->item==key)
+		{
+			delete Start;
 			Start=NULL;
+		}
 		else
 		{
-			Node *temp=Start;
-			for(int i=0;temp->next->item!=key;i++)
+			Node *t=Start;
+			while(t)
 			{
-				temp=temp->next;
+				if(t->next->item==key)
+				{
+					Node *r=t->next;
+					t->next=t->next->next;
+					delete r;
+					break;
+				}
+				t=t->next;
 			}
-			if(temp->next->next==NULL)
-				temp->next=NULL;
-			else
-				temp->next=temp->next->next;
 		}
 	}
 	catch(int e)
@@ -62,15 +68,20 @@ void SLL::deleteLast()
 {
 	try
 	{
-		if(Start==NULL)
+		if(Start)
 			throw LIST_EMPTY;
-		else if(Start->next==NULL)
-			Start==NULL;
+		else if(Start->next)
+		{
+			delete Start;
+			Start=NULL;
+		}
 		else
 		{
-			Node *temp=Start;
-			for(int i=0;temp->next->next!=NULL;i++)
-				temp->next=NULL;
+			Node *t=Start;
+			while(t->next->next)
+				t=t->next;
+			delete t->next;
+			t->next=NULL;
 		}
 	}
 	catch(int e)
@@ -83,12 +94,14 @@ void SLL::deleteFirst()
 {
 	try
 	{
-		if(Start==NULL)
+		if(Start)
 			throw LIST_EMPTY;
-		else if(Start->next==NULL)
-			Start=NULL;
 		else 
+		{
+			Node *r=Start;
 			Start=Start->next;
+			delete r;
+		}
 	}
 	catch(int e)
 	{
@@ -96,21 +109,15 @@ void SLL::deleteFirst()
 	}
 }
 
-void SLL::insertAfter(Node *temp,int key)
+void SLL::insertAfter(Node *t,int key)
 {
-	Node *ptr=new Node;
-	ptr->item=key;
-
-	if(temp->next==NULL)
+	if(t)
 	{
-		ptr->next=NULL;
-		temp->next=ptr;
-	}
-	else
-	{
-		ptr->next=temp->next;
-		temp->next=ptr;
-	}
+		Node *ptr=new Node;
+		ptr->item=key;
+		ptr->next=t->next;
+		t->next=ptr;
+	}  
 }
 
 Node* SLL::search(int key)
@@ -121,19 +128,20 @@ Node* SLL::search(int key)
 			throw LIST_EMPTY;
 		else
 		{
-			Node*temp=Start;
-			for(int i=0;temp->next!=NULL;i++)
+			Node *t=Start;
+			while(t)
 			{
-				if(temp->item==key)
-					return temp;
-				temp=temp->next;
+				if(t->item==key)
+					return t;
+				t=t->next;
 			}
 			return NULL;
 		}
 	}
 	catch(int e)
 	{
-		cout<<"\nLined list is empty";
+		cout<<"\nLinked list is empty";
+		return NULL;
 	}
 }
 
@@ -142,36 +150,23 @@ void SLL::insertAtLast(int data)
 	Node *ptr=new Node;
 	ptr->item=data;
 	ptr->next=NULL;
-
 	if(Start==NULL)
 		Start=ptr;
-	else if(Start->next==NULL)
-		Start->next=ptr;
 	else
 	{
-		Node *temp=Start;
-		for(int i=0;temp->next!=NULL;i++)
-			temp=temp->next;
-		temp->next=ptr;
+		Node *t=Start;
+		while(t->next!=NULL)
+			t=t->next;
+		t->next=ptr;
 	}
 }
 
 void SLL::insertAtStart(int data)
 {
-	if(Start==NULL)
-	{
-		Node *ptr=new Node;
-		ptr->item=data;
-		ptr->next=NULL;
-		Start=ptr;
-	}
-	else
-	{
-		Node *ptr=new Node;
-		ptr->item=data;
-		ptr->next=Start;
-		Start=ptr;
-	}
+	Node *ptr=new Node;
+	ptr->item=data;
+	ptr->next=NULL;
+	Start=ptr;
 }
 
 SLL::SLL()
