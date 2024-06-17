@@ -80,7 +80,6 @@ void DLL::deleteNode(int data)
 					delete r;
 					break;
 				}
-
 				t=t->next;
 			}
 		}
@@ -109,12 +108,12 @@ void DLL::deleteLast()
 
 void DLL::deleteFirst()
 {
-	Node *r=start;
 	if(start)
 	{
-		start=start->next;
+		Node *r=start;
 		if(start->next)
 			start->next->prev=NULL;
+		start=start->next;
 		delete r;
 	}
 }
