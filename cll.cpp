@@ -19,9 +19,39 @@ class CLL
 		void deleteFirst();
 		void deleteLast();
 		void deleteNode(int);
+		void deleteNodeAlternate(int);
 		~CLL();
 
 };
+
+void CLL::deleteNodeAlternate(int data)
+{
+	if(last)
+	{
+		Node *t=last;
+		if(last->next==last && last->item==data)
+		{
+			delete last;
+			last=NULL;
+		}
+	}
+	else
+	{
+		do
+		{
+			if(t->next->item==data)
+			{
+				Node *r=t->next;
+				t->next=t->next->next;
+				if(t->next==last)
+					last=t;
+				delete r;
+				break;
+			}
+			t=t->next;
+		}while(t!=last)
+	}
+}
 
 CLL::~CLL()
 {
@@ -29,27 +59,37 @@ CLL::~CLL()
 		deleteFirst();
 }
 
-void deleteNode(int data)
+void CLL::deleteNode(int data)
 {
 	Node *t=last;
 
-	if(last->item==data)
+	if(last->next==last && last->item==data )
 	{
 		delete last;
 		last=NULL;
 	}
 	else
-	{
+	{ 
 		while(t->next!=last)
 		{
 			if(t->next->item==data)
-				break;
+			{
+				Node *r=t->next;
+				t->next=t->next->next;
+				delete r;
+			}
 			t=t->next;
 		}
+	}
+	if(t->next->item==data)
+	{
 		Node *r=t->next;
 		t->next=t->next->next;
 		delete r;
+		last=t;
 	}
+
+
 }
 
 void CLL::deleteLast()
@@ -63,7 +103,7 @@ void CLL::deleteLast()
 		}
 		else
 		{
-			Node *t=new Node;
+			Node *t=last;
 			while(t->next!=last)
 				t=t->next;
 			t->next=last->next;
@@ -99,10 +139,12 @@ void CLL::insertAfter(Node *temp,int data)
 		ptr->item=data;
 		ptr->next=temp->next;
 		temp->next=ptr;
+		if(temp==last)
+			last=ptr;
 	}
 }
 
-void CLL::search(int data)
+Node* CLL::search(int data)
 {
 	if(last)
 	{
@@ -118,6 +160,7 @@ void CLL::search(int data)
 		else
 			return NULL;
 	}
+	return NULL;
 }
 
 void CLL::insertEnd(int data)
@@ -128,7 +171,7 @@ void CLL::insertEnd(int data)
 	{
 		ptr->next=last->next;
 		last->next=ptr;
-		last=ptr;
+		last=pt r;
 	}
 	else
 	{
