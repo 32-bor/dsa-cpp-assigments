@@ -18,6 +18,7 @@ class Stack
 		~Stack();
 		bool isFull();
 		bool isEmpty();
+		int size();
 		void reverse();
 		int min();
 };
@@ -42,7 +43,7 @@ Stack::Stack(int capacity)
 void Stack::push(int data)
 {
 	if(isFull())
-		throw ARRAY_OVERFLOW
+		throw STACK_OVERFLOW
 	else
 	{
 		top++;
@@ -53,14 +54,14 @@ void Stack::push(int data)
 int Stack::peek()
 {
 	if(isEmpty())
-		throw STACK_EMPTY;
+		throw STACK_UNDERFLOW;
 	return top;
 }
 
 void Stack::pop()
 {
 	if(isEmpty())
-		throw STACK_EMPTY;
+		throw STACK_UNDERFLOW;
 	top--;
 }
 
@@ -78,7 +79,7 @@ bool Stack::isFull()
 	try
 	{
 		if(ptr==NULL)
-			throw INVALID_ARRAY;
+			throw INVALID_STACK;
 		else
 			return top==capacity-1;
 	}
@@ -96,12 +97,16 @@ bool Stack::isEmpty()
 			throw INVALID_ARRAY;
 		else
 			return top==-1;
-
 	}
 	catch(int e)
 	{
 		cout<<"\nInvalid array";
 	}
+}
+
+int Stack::size()
+{
+	return top+1;
 }
 
 void Stack::reverse()
@@ -147,6 +152,33 @@ int Stack::min()
 	{
 		cout<<"\nInvalid array";
 	}
+}
+
+void Stack::reverseStack(Stack &s1)
+{
+	Stack s2(s1.size()),s3(s1.size());
+
+	while(!s1.isEmpty())
+	{
+		s2.push(s1.peek());
+		s1.pop();
+	}
+	while(!s2.isEmpty())
+	{
+		s3.push(s2.peek());
+		s2.pop();
+	}
+	while(!s3.isEmpty())
+	{
+		s1.push(s3.peek())
+		s3.pop();
+	}
+}
+
+void minValue()
+{
+	Stack s1(10),minStack(10);
+	
 }
 
 
