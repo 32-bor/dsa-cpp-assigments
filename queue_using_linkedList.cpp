@@ -62,7 +62,7 @@ void Queue::dequeue()
 		if(front==rear)
 			front=rear=NULL;
 		else
-			  front=front->next;
+			 front=front->next;
 		delete temp;
 	}
 }
