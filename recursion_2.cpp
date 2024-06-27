@@ -10,7 +10,7 @@ void DecimalToBinary(int);
 void DecimalToOctal(int);
 int Fibonacci(int);
 int hcf(int,int);
-double power(double,int);
+double power(double,double);
 
 int hcf(int a,int b)
 {
@@ -28,11 +28,14 @@ int hcf(int a,int b)
 	}
 }
 
-double power(double x,int y)
+double power(double x,double y)
 {
-	if(y==1)
-		return x;
-	return x*power(x,y-1);
+	if(y==0)
+		return 1;
+	if(y>0)
+		return x*power(x,y-1);
+	else
+		return 1/x*power(x,y+1);
 }
 
 int Fibonacci(int n)
@@ -107,10 +110,10 @@ int sumNatural(int n)
 int main()
 { 
 	double x;
-	int y;
+	double y;
 	cout<<"Enter two nos\n";
 	cin>>x>>y;
-	cout<<hcf(x,y);
+	cout<<power(x,y);
 	cout<<endl;
 	return 0;
 }
